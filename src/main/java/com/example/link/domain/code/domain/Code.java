@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Table(indexes = @Index(
         name = "idx_code",
-        columnList = "invite_code",
+        columnList = "inviteCode",
         unique = true
 ))
 public class Code {
