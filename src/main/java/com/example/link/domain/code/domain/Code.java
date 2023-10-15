@@ -25,7 +25,7 @@ public class Code {
     @Id
     @GeneratedValue
     private Long id;
-    private Long codeSequence;
+    private String codeSequence;
     private String inviteCode;
     @Enumerated(EnumType.STRING)
     private CodeStatus codeStatus;
