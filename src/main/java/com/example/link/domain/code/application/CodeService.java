@@ -50,9 +50,18 @@ public class CodeService {
         Code code = codeRepository.findByInviteCode(inviteCode)
                 .orElseThrow(() -> new CodeException(ErrorCode.CODE_NOT_FOUND));
 
+        validateExpiringCode(code);
+
         code.setCodeStatus(CodeStatus.EXPIRED);
         code.setExpiredAt(LocalDateTime.now());
 
         codeRepository.save(code);
+    }
+
+    private void validateExpiringCode(Code code) {
+        if (CodeStatus.EXPIRED.equals(code.getCodeStatus())
+                || code.getExpiredAt() != null) {
+            throw new CodeException(ErrorCode.CODE_ALREADY_EXPIRED);
+        }
     }
 }
