@@ -1,6 +1,7 @@
 package com.example.link.domain.code.domain;
 
 import com.example.link.domain.code.type.CodeStatus;
+import com.example.link.domain.member.domain.Member;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,6 +26,8 @@ public class Code {
     @Id
     @GeneratedValue
     private Long id;
+    @ManyToOne
+    private Member member;
     private String codeSequence;
     private String inviteCode;
     @Enumerated(EnumType.STRING)
