@@ -19,6 +19,7 @@ public class CodeService {
 
     /**
      * 새로운 초대코드를 생성 및 발급 한다.
+     *
      * @return
      */
     @Transactional
@@ -26,7 +27,7 @@ public class CodeService {
         String newCodeSequence = String.valueOf(codeRepository.findFirstByOrderByIdDesc()
                 .map(code -> Integer.parseInt(code.getCodeSequence()) + 1)
                 .orElse(1000000000));
-        String newInviteCode = makeCodeFromSequence(Long.parseLong(newCodeSequence));
+        String newInviteCode = CodeUtil.makeCodeFromSequence(Long.parseLong(newCodeSequence));
 
         Code savedCode = codeRepository.save(
                 Code.builder()
@@ -54,18 +55,4 @@ public class CodeService {
 
         codeRepository.save(code);
     }
-
-    private String makeCodeFromSequence(Long sequence) {
-        String elements = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder sb = new StringBuilder();
-        while (sequence != 0) {
-            sb.insert(0, elements.charAt((int) (sequence % 62)));
-            sequence /= 62;
-        }
-        while (sb.length() != 7) {
-            sb.insert(0, '0');
-        }
-        return sb.toString();
-    }
-
 }
