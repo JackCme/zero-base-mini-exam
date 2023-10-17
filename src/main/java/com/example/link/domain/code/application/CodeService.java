@@ -53,11 +53,11 @@ public class CodeService {
      * 기존 생성된 초대코드를 만료시킨다
      */
     @Transactional
-    public void expireInviteCode(String inviteCode) {
+    public void expireMemberInviteCode(Long memberId, String inviteCode) {
         Code code = codeRepository.findByInviteCode(inviteCode)
                 .orElseThrow(() -> new CodeException(CodeException.ErrorCode.CODE_NOT_FOUND));
 
-        validateExpiringCode(code);
+        validateExpiringCode(code, memberId);
 
         code.setCodeStatus(CodeStatus.EXPIRED);
         code.setExpiredAt(LocalDateTime.now());
@@ -65,10 +65,13 @@ public class CodeService {
         codeRepository.save(code);
     }
 
-    private void validateExpiringCode(Code code) {
+    private void validateExpiringCode(Code code, Long memberId) {
         if (CodeStatus.EXPIRED.equals(code.getCodeStatus())
                 || code.getExpiredAt() != null) {
             throw new CodeException(CodeException.ErrorCode.CODE_ALREADY_EXPIRED);
+        }
+        if (!memberId.equals(code.getMember().getId())) {
+            throw new CodeException(CodeException.ErrorCode.CODE_INVALID);
         }
     }
 }

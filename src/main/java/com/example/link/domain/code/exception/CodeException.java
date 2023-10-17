@@ -12,6 +12,7 @@ public class CodeException extends RuntimeException {
     private String errorMessage;
 
     public CodeException(CodeException.ErrorCode errorCode) {
+        super(errorCode.getDescription());
         this.errorCode = errorCode;
         this.errorMessage = errorCode.getDescription();
     }
@@ -19,9 +20,11 @@ public class CodeException extends RuntimeException {
     @Getter
     @AllArgsConstructor
     public enum ErrorCode {
-        CODE_NOT_FOUND("Code is not found"),
-
-        CODE_ALREADY_EXPIRED("Code is already expired");
+        CODE_NOT_FOUND(404,"Code is not found")
+        ,CODE_ALREADY_EXPIRED(400,"Code is already expired")
+        ,CODE_INVALID(403,"Invalid code")
+        ;
+        private final int status;
         private final String description;
 
     }
