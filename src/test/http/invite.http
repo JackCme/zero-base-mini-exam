@@ -1,0 +1,18 @@
+POST http://localhost:8080/invite/member
+Content-Type: application/json
+
+{
+  "name": "jack",
+  "email" : "jack3@example.com",
+  "phoneNumber": "01012341234"
+}
+
+###
+
+POST http://localhost:8080/invite/accept
+Content-Type: application/json
+
+{
+  "inviteCode" : "015FTGo",
+  "memberId": 3
+}
