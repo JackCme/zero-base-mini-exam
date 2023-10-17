@@ -139,7 +139,7 @@ class CodeServiceTest {
         given(codeRepository.findByInviteCode(anyString()))
                 .willReturn(Optional.empty());
         // When
-        CodeException codeException = assertThrows(CodeException.class, () -> codeService.expireInviteCode("1234"));
+        CodeException codeException = assertThrows(CodeException.class, () -> codeService.expireMemberInviteCode(1L, "1234"));
 
         // Then
         assertEquals(CodeException.ErrorCode.CODE_NOT_FOUND, codeException.getErrorCode());
@@ -152,7 +152,9 @@ class CodeServiceTest {
         // Given
         Long codeSequence = 1000000010L;
         String inviteCode = CodeUtil.makeCodeFromSequence(codeSequence);
+        Member member = Member.builder().id(1L).build();
         Code code = Code.builder()
+                .member(member)
                 .codeSequence(String.valueOf(codeSequence))
                 .codeStatus(CodeStatus.EXPIRED)
                 .inviteCode(inviteCode)
@@ -163,7 +165,7 @@ class CodeServiceTest {
         given(codeRepository.findByInviteCode(anyString()))
                 .willReturn(Optional.of(code));
         // When
-        CodeException codeException = assertThrows(CodeException.class, () -> codeService.expireInviteCode(inviteCode));
+        CodeException codeException = assertThrows(CodeException.class, () -> codeService.expireMemberInviteCode(1L, inviteCode));
 
         // Then
         assertEquals(CodeException.ErrorCode.CODE_ALREADY_EXPIRED, codeException.getErrorCode());
@@ -176,7 +178,11 @@ class CodeServiceTest {
         // Given
         Long codeSequence = 1000000010L;
         String inviteCode = CodeUtil.makeCodeFromSequence(codeSequence);
+        Member member = Member.builder()
+                .id(1L)
+                .build();
         Code code = Code.builder()
+                .member(member)
                 .codeSequence(String.valueOf(codeSequence))
                 .codeStatus(CodeStatus.NORMAL)
                 .inviteCode(inviteCode)
@@ -188,7 +194,7 @@ class CodeServiceTest {
 
         ArgumentCaptor<Code> captor = ArgumentCaptor.forClass(Code.class);
         // When
-        codeService.expireInviteCode(inviteCode);
+        codeService.expireMemberInviteCode(1L, inviteCode);
         // Then
         verify(codeRepository, times(1)).save(captor.capture());
         assertEquals(CodeStatus.EXPIRED, captor.getValue().getCodeStatus());
