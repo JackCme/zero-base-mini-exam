@@ -22,7 +22,7 @@ public class InviteController {
     @ExceptionHandler({CodeException.class})
     protected ResponseEntity<ErrorDto> handleCodeException(CodeException ex) {
         return new ResponseEntity<>(
-                new ErrorDto(ex.getErrorCode().getStatus(), ex.getErrorCode().getDescription()),
+                new ErrorDto(ex.getErrorCode().getStatus(), ex.getErrorCode().getDescription(), ex.getErrorCode().toString()),
                 HttpStatus.valueOf(ex.getErrorCode().getStatus())
         );
     }
@@ -30,7 +30,7 @@ public class InviteController {
     @ExceptionHandler({MemberException.class})
     protected ResponseEntity<ErrorDto> handleMemberException(MemberException ex) {
         return new ResponseEntity<>(
-                new ErrorDto(ex.getErrorCode().getStatus(), ex.getErrorCode().getDescription()),
+                new ErrorDto(ex.getErrorCode().getStatus(), ex.getErrorCode().getDescription(), ex.getErrorCode().toString()),
                 HttpStatus.valueOf(ex.getErrorCode().getStatus())
         );
     }
