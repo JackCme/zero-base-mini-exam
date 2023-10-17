@@ -1,8 +1,5 @@
 package com.example.link.domain.member.application;
 
-import com.example.link.domain.code.application.CodeService;
-import com.example.link.domain.code.application.CodeUtil;
-import com.example.link.domain.code.dto.CodeDto;
 import com.example.link.domain.member.dao.MemberRepository;
 import com.example.link.domain.member.domain.Member;
 import com.example.link.domain.member.dto.MemberDto;
@@ -26,8 +23,6 @@ import static org.mockito.BDDMockito.given;
 class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
-    @Mock
-    private CodeService codeService;
     @InjectMocks
     private MemberService memberService;
 
