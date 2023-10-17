@@ -21,7 +21,7 @@
 `Request Body Parameters`
 
   | Name          | Type   | Required | Description |
-    |---------------|--------|----------|-----------|
+  | ------------- | ------ | -------- | --------- |
   | `name`        | String | ✅        | 회원 이름 |
   | `email`       | String | ✅        | 회원 이메일(중복 불가) |
   |  `phoneNumber` | String | ✅         | 회원 전화번호 |
@@ -59,7 +59,7 @@
 `Request Body Parameters`
 
 | Name          | Type    | Required | Description     |
-    |---------------|---------|----------|-----------------|
+| --------------- | --------- | ---------- | ----------------- |
 | `inviteCode`        | String  | ✅        | 회원의 초대 코드       |
 | `memberId`       | Integer | ✅        | 초대코드를 받은 회원의 ID |
 
